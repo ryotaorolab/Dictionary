@@ -3,6 +3,7 @@ package com.mou78.dictionary;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -100,19 +101,21 @@ public class MainActivity extends AppCompatActivity {
         String deleteword = searchWordEditText.getText().toString();
         if (wordSet.contains(deleteword)) {
             wordSet.remove(deleteword);
-            
-//            SharedPreferences.pref= getSharedPreferences("dictionary", Context.MODE_PRIVATE);
-//            SharedPreferences.Editor editor = pref.edit();
-//            editor.remove(deleteword);
-//            editor.commit();
             editor.remove(deleteword);
             adapter.notifyDataSetChanged();
             editor.commit();
             Toast.makeText(this, "削除しました", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(getApplication(),MainActivity.class);
+            startActivity(intent);
+        } if (deleteword.contains("全て削除")) {
+            editor.clear();
+            editor.commit();
+            Intent intent = new Intent(getApplication(),MainActivity.class);
+            startActivity(intent);
+            Toast.makeText(this, "全て消しました", Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(this, "該当する単語が見つかりません", Toast.LENGTH_LONG).show();
         }
-
     }
 
     public void add(View v) {
