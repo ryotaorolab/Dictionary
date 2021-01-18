@@ -96,19 +96,20 @@ public class MainActivity extends AppCompatActivity {
     //テストコードの実行ボタン
 
     public void testbutton(View v){
-//            String testsbek = tests + tests;
-//            Toast.makeText(getApplicationContext(),testsbek,Toast.LENGTH_SHORT).show();
         String deleteword = searchWordEditText.getText().toString();
-        if (wordSet.contains(deleteword)) {
+
+        if (wordSet.contains(deleteword)) { //入力した文字が保存されているか
             wordSet.remove(deleteword);
             editor.remove(deleteword);
-            adapter.notifyDataSetChanged();
+            editor.putStringSet("wordSet", wordSet);
             editor.commit();
-            Toast.makeText(this, "削除しました", Toast.LENGTH_LONG).show();
             Intent intent = new Intent(getApplication(),MainActivity.class);
             startActivity(intent);
-        } if (deleteword.contains("全て削除")) {
+            Toast.makeText(this, "削除しました", Toast.LENGTH_LONG).show();
+        } if (deleteword.contains("1111")) { //1111と入力されていたら全て消去する
+//            wordSet.clear();
             editor.clear();
+//            hashMap.clear();
             editor.commit();
             Intent intent = new Intent(getApplication(),MainActivity.class);
             startActivity(intent);

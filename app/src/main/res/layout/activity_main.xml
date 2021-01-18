@@ -73,10 +73,9 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
                 android:ems="10"
-                android:hint="単語"
+                android:hint="検索/削除する単語"
                 android:inputType="textPersonName"
-                android:singleLine="true"
-                android:text="Name" />
+                android:singleLine="true" />
 
             <Button
                 android:id="@+id/searchButton"
