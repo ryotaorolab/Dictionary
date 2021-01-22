@@ -66,57 +66,47 @@ public class MainActivity extends AppCompatActivity {
         }
         //ListViewに表示
         listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener(
+                new AdapterView.OnItemClickListener() {
+                    public void onItemClick(AdapterView<?> parent, View view, int pos, long id) {
+                        remove(pos);
+                    }
+                });
     }
 
+        //削除処理
+        public void remove(int position) {
+            String item = adapter.getItem(position);
+            String word = item.split("[【】]")[1];
+            String mean = hashMap.get(word);
 
 
-        //削除機能作り中　ここから
+        //SetからKey削除
+            wordSet.remove(word);
 
-//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                ArrayAdapter adapter = (ArrayAdapter) listView.getAdapter();
-//
-//                String item = (String) adapter.getItem(position);
-//                adapter.remove(item);
+        //ShardPreferencesからB削除
+            editor.remove(word);
 
-                //Test
-//                String test = (String) adapter.getItem(position);
-//                Toast.makeText(getApplicationContext(),test,Toast.LENGTH_SHORT).show();
-                //Test終わり
+        //ShardPreferencesにSetの値(A)を更新
+            editor.putStringSet("wordSet", wordSet);
+            editor.commit();
 
-//                SharedPreferences pref= getSharedPreferences("dictionary", Context.MODE_PRIVATE);
-//                SharedPreferences.Editor editor = pref.edit();
-//                editor.remove("wordSet");
-//                editor.commit();
-//            }
-//        });
-//        //ここまで
+        // listviewも更新
+            adapter.remove(item);
+            }
+
+
 
     //テストコードの実行ボタン
 
     public void testbutton(View v){
-        String deleteword = searchWordEditText.getText().toString();
 
-        if (wordSet.contains(deleteword)) { //入力した文字が保存されているか
-            wordSet.remove(deleteword);
-            editor.remove(deleteword);
-            editor.putStringSet("wordSet", wordSet);
-            editor.commit();
-            Intent intent = new Intent(getApplication(),MainActivity.class);
-            startActivity(intent);
-            Toast.makeText(this, "削除しました", Toast.LENGTH_LONG).show();
-        } if (deleteword.contains("1111")) { //1111と入力されていたら全て消去する
-//            wordSet.clear();
             editor.clear();
-//            hashMap.clear();
             editor.commit();
+
             Intent intent = new Intent(getApplication(),MainActivity.class);
             startActivity(intent);
-            Toast.makeText(this, "全て消しました", Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(this, "該当する単語が見つかりません", Toast.LENGTH_LONG).show();
-        }
     }
 
     public void add(View v) {

@@ -91,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="0"
                 android:onClick="testbutton"
-                android:text="削除" />
+                android:text="全消去" />
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
